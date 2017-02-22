@@ -33,40 +33,7 @@ public class MainActivity extends AppCompatActivity {
         final TextView tv2 = (TextView) findViewById(R.id.textView2);
         final TextView tv3 = (TextView) findViewById(R.id.textView3);
 
-        //监听电池电量半分比的变化
-        PowerUtils.registerPowerListener(this, new PowerConnectionReceiver.PowerConnectionReceiverListener() {
-            @Override
-            public void currentPower(int power) {
-                Log.e(TAG, "currentPower: "+power );
-                tv1.setText("电量"+power);
-            }
-        });
 
-        //监听网络情况
-        NetWorkUtils.registerLister(this, new NetworkStateReceiver.NetworkStateReceiverListener() {
-            @Override
-            public void networkAvailable(String networkName) {
-                Log.e(TAG, "networkAvailable: "+networkName );
-                tv2.setText(networkName);
-            }
-
-            @Override
-            public void networkUnavailable() {
-                Log.e(TAG, "networkUnavailable: " );
-                tv2.setText("networkUnavailable: ");
-
-            }
-        });
-
-
-        PhoneStateUtils.registerPhoneStateListener(this, new MyPhoneStateListener.MyPhoneStateListenerListener() {
-            @Override
-            public void onSignalStrengthsChanged(SignalStrength signalStrength) {
-                Log.e(TAG, "onSignalStrengthsChanged: "+signalStrength
-                        +"----  signalStrength.getGsmSignalStrength()"+signalStrength.getGsmSignalStrength());
-                tv3.setText(signalStrength.getGsmSignalStrength()+"");
-            }
-        });
 
         //读取通讯录列表
         ArrayList<ContactEntity> contacts = ContactsUtils.getPhoneContacts(this);
@@ -113,7 +80,73 @@ public class MainActivity extends AppCompatActivity {
                 mRecorder.stopRecording();
             }
         });
+//        public static final String NETWORK_TYPE_WIFI = "wifi";
+//        public static final String NETWORK_TYPE_3G = "3g";
+//        public static final String NETWORK_TYPE_4G = "4g";
+//        public static final String NETWORK_TYPE_2G = "2g";
+//        public static final String NETWORK_TYPE_WAP = "wap";
+//        public static final String NETWORK_TYPE_UNKNOWN = "unknown";
+//        public static final String NETWORK_TYPE_DISCONNECT = "disconnect";
 
+        String networkTypeName = NetWorkUtils.getNetworkTypeName(this.getApplication());
+
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.e(TAG, "onResume: " );
+
+
+        Log.e(TAG, "onResume: 注册电量回调" );
+        //监听电池电量半分比的变化
+        PowerUtils.registerPowerListener(this, new PowerConnectionReceiver.PowerConnectionReceiverListener() {
+            @Override
+            public void currentPower(int power) {
+                Log.e(TAG, "获取到currentPower: "+power );
+//                tv1.setText("电量"+power);
+            }
+        });
+
+        Log.e(TAG, "onResume: 注册网络回调" );
+        //监听网络情况
+        NetWorkUtils.registerLister(this, new NetworkStateReceiver.NetworkStateReceiverListener() {
+            @Override
+            public void networkAvailable(String networkName) {
+                Log.e(TAG, "获取到networkAvailable: "+networkName );
+//                tv2.setText(networkName);
+            }
+
+            @Override
+            public void networkUnavailable() {
+                Log.e(TAG, "获取到networkUnavailable: " );
+//                tv2.setText("networkUnavailable: ");
+
+            }
+        });
+
+
+        Log.e(TAG, "onResume: 注册手机信号回调" );
+        PhoneStateUtils.registerPhoneStateListener(this, new MyPhoneStateListener.MyPhoneStateListenerListener() {
+            @Override
+            public void onSignalStrengthsChanged(SignalStrength signalStrength) {
+                Log.e(TAG, "获取到onSignalStrengthsChanged: "+signalStrength
+                        +"----  signalStrength.getGsmSignalStrength()"+signalStrength.getGsmSignalStrength());
+//                tv3.setText(signalStrength.getGsmSignalStrength()+"");
+            }
+        });
+
+        Log.e(TAG, "onResume: done" );
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.e(TAG, "onStop: " );
+        NetWorkUtils.unRegisterNetWork(this);
+        PhoneStateUtils.unRegisterPhoneStateListener(this);
+        PowerUtils.unRegisterPowerListener(this);
 
     }
 

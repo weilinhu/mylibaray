@@ -21,8 +21,15 @@ public class PowerUtils {
 
     }
     public static void unRegisterPowerListener(Activity activity){
-        activity.unregisterReceiver(powerConnectionReceiver);
-        powerConnectionReceiver.removeListeners();
+
+
+        if (powerConnectionReceiver!=null){
+            activity.unregisterReceiver(powerConnectionReceiver);
+            powerConnectionReceiver.removeListeners();
+        }
+
+
+
     }
 
 }
