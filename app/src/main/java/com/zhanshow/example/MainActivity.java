@@ -1,4 +1,4 @@
-package com.zhanshow.weilinhu_mac.cocosapi;
+package com.zhanshow.example;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -18,6 +18,7 @@ import com.zhanshow.mylibrary.power.PowerConnectionReceiver;
 import com.zhanshow.mylibrary.power.PowerUtils;
 import com.zhanshow.mylibrary.record.Recorder;
 import com.zhanshow.mylibrary.record.RecorderReceiver;
+import com.zhanshow.weilinhu_mac.cocosapi.R;
 
 import java.util.ArrayList;
 
