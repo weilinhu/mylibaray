@@ -76,6 +76,10 @@ public class Recorder implements OnCompletionListener, OnErrorListener {
         mContext.registerReceiver(mReceiver, filter);
     }
 
+    public void release(Context context){
+        stop();
+        context.unregisterReceiver(mReceiver);
+    }
 
     public boolean DeleteFolder(String filePath) {
         File file = new File(filePath);

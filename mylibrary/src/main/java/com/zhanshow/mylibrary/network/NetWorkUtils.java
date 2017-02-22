@@ -190,15 +190,9 @@ public class NetWorkUtils {
 
 
     public static void unRegisterNetWork(final Activity activity) {
-        if (mNetworkStateReceiver == null){
-            return;
-        }
 
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
 
-            activity.unregisterReceiver(mNetworkStateReceiver);
-
-        }
+        activity.unregisterReceiver(mNetworkStateReceiver);
         mNetworkStateReceiver.removeListeners();
     }
 
