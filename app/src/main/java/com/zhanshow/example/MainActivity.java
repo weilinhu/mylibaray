@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         int currentSignalStrength = PhoneStateUtils.getCurrentSignalStrength();
-                        Log.e(TAG, "currentSignalStrength: "+currentSignalStrength +" --- "+MyPhoneStateListener.sMark);
+                        Log.e(TAG, "currentSignalStrength: "+currentSignalStrength);
                         int currentPower = PowerUtils.getCurrentPower();
                         Log.e(TAG, "currentPower: "+currentPower );
 
@@ -166,6 +166,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         Log.e(TAG, "onDestroy: ");
+        if (mRecorder!=null){
+            mRecorder.release(this);
+        }
 
     }
 }
