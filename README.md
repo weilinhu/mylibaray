@@ -71,7 +71,7 @@ ArrayList<ContactEntity> contacts = ContactsUtils.getPhoneContacts(this);
 
 ```
 //录音初始化
-Recorder mRecorder = new Recorder(this);
+mRecorder = new Recorder(this);
 
 //开始录音
 mRecorder.startRecording(new RecorderReceiver.RecorderReceiverListener() {
@@ -109,11 +109,9 @@ mRecorder.startRecording(new RecorderReceiver.RecorderReceiverListener() {
 
 ```
 
-如果使用了相应功能，onDestroy中关闭对应功能
+如果使用了相应功能，在相应生命周期中关闭对应功能
 
- @Override
-    protected void onDestroy() {
-        super.onDestroy();
+
         //取消网络监听
         NetWorkUtils.unRegisterNetWork(this);
         
@@ -122,11 +120,12 @@ mRecorder.startRecording(new RecorderReceiver.RecorderReceiverListener() {
         //取消手机电量监听
         PowerUtils.unRegisterPowerListener(this);
 
-        //如果当前正在录音，那么停止录音
-         mRecorder.stopRecording(); 
+        //录音释放资源
+         if (mRecorder!=null){
+                     mRecorder.release(this);
+         }
 
 
-    }
 
 ```
 
