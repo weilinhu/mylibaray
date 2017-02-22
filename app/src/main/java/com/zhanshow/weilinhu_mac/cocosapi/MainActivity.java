@@ -96,10 +96,16 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        Log.e(TAG, "onResume: " );
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.e(TAG, "onStart: " );
 
 
-        Log.e(TAG, "onResume: 注册电量回调" );
+        Log.e(TAG, "onStart: 注册电量回调" );
         //监听电池电量半分比的变化
         PowerUtils.registerPowerListener(this, new PowerConnectionReceiver.PowerConnectionReceiverListener() {
             @Override
@@ -109,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Log.e(TAG, "onResume: 注册网络回调" );
+        Log.e(TAG, "onStart: 注册网络回调" );
         //监听网络情况
         NetWorkUtils.registerLister(this, new NetworkStateReceiver.NetworkStateReceiverListener() {
             @Override
@@ -127,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        Log.e(TAG, "onResume: 注册手机信号回调" );
+        Log.e(TAG, "onStart: 注册手机信号回调" );
         PhoneStateUtils.registerPhoneStateListener(this, new MyPhoneStateListener.MyPhoneStateListenerListener() {
             @Override
             public void onSignalStrengthsChanged(SignalStrength signalStrength) {
@@ -137,7 +143,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Log.e(TAG, "onResume: done" );
+        Log.e(TAG, "onStart: done" );
     }
 
     @Override
