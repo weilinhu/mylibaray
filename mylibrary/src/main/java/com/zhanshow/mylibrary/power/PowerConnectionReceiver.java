@@ -17,6 +17,7 @@ public class PowerConnectionReceiver extends BroadcastReceiver {
     protected List<PowerConnectionReceiver.PowerConnectionReceiverListener> listeners = new ArrayList<>();
     private Object lock = new Object();
     private int currentpower;
+    public static int sCurrentpower;
     @Override
     public void onReceive(Context context, Intent intent) {
         if (Intent.ACTION_BATTERY_CHANGED.equals(intent.getAction())) {
@@ -26,7 +27,7 @@ public class PowerConnectionReceiver extends BroadcastReceiver {
             // 获取总电量
             int total = bundle.getInt("scale");
             currentpower = current * 100 / total;
-
+            sCurrentpower = currentpower;
             notifyStateToAll();
         }
 

@@ -32,4 +32,8 @@ public class PowerUtils {
 
     }
 
+    public static int getCurrentPower(){
+        return PowerConnectionReceiver.sCurrentpower;
+    }
+
 }
