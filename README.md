@@ -28,6 +28,11 @@ Add it in your root build.gradle at the end of repositories:
                 
             }
         });
+
+// 获取当前电量
+int currentPower = PowerUtils.getCurrentPower();
+                                Log.e(TAG, "currentPower: "+currentPower );
+
 ```
 
 - 监听网络情况
@@ -59,14 +64,17 @@ Add it in your root build.gradle at the end of repositories:
 
 - 手机信号监听
 ```
+// position:0～5数值 0:无手机卡或者无信号强度 1～5 手机信号轻度，依次增大
 PhoneStateUtils.registerPhoneStateListener(this, new MyPhoneStateListener.MyPhoneStateListenerListener() {
             @Override
-            public void onSignalStrengthsChanged(SignalStrength signalStrength) {
-                Log.e(TAG, "onSignalStrengthsChanged: "+signalStrength
-                        +"----  signalStrength.getGsmSignalStrength()"+signalStrength.getGsmSignalStrength());
-                
+            public void onSignalStrengthsChanged(int position) {
+                Log.e(TAG, "获取到onSignalStrengthsChanged: " + position);
             }
         });
+
+//获取当前信号强度
+int currentSignalStrength = PhoneStateUtils.getCurrentSignalStrength();
+                        Log.e(TAG, "currentSignalStrength: "+currentSignalStrength);
 ```
 
 
@@ -139,10 +147,10 @@ mRecorder.startRecording(new RecorderReceiver.RecorderReceiverListener() {
         //取消手机电量监听
         PowerUtils.unRegisterPowerListener(this);
 
-        //录音释放资源
-         if (mRecorder!=null){
-                     mRecorder.release(this);
-         }
+        //释放录音资源
+                if (mRecorder!=null){
+                    mRecorder.release(this);
+                }
 
 
 
