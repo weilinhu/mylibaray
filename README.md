@@ -1,4 +1,4 @@
-- 使用方法（usage）
+**_使用方法（usage）_**
 
 **Step 1. Add the JitPack repository to your build file**
 
