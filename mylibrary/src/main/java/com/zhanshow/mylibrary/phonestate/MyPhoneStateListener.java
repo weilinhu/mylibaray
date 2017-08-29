@@ -36,12 +36,25 @@ public class MyPhoneStateListener extends PhoneStateListener {
     @Override
     public void onSignalStrengthsChanged(SignalStrength signalStrength) {
         super.onSignalStrengthsChanged(signalStrength);
+        /*@author: FindHao
+        * 添加对移动4G的信号解析支持
+        * */
+        String signalInfo = signalStrength.toString();
+        String[] params = signalInfo.split(" ");
         if(sMark <0)
         {
             getmark();
         }
         if (sMark == 0) {
-            signal = signalStrength.getGsmSignalStrength();
+            if(tel.getNetworkType() == TelephonyManager.NETWORK_TYPE_LTE){
+                Log.e("SignalState","4G");
+                /*@author: FindHao
+                * 这里不同手机，dbm信号有不同的index*/
+                signal = Integer.parseInt(params[11]);
+            }else{
+                Log.e("SignalState", "2G");
+                signal = signalStrength.getGsmSignalStrength();
+            }
             getLevel();
         } else if (sMark == 1) {
             signal = signalStrength.getCdmaDbm();
@@ -137,7 +150,7 @@ public class MyPhoneStateListener extends PhoneStateListener {
             else
                 sPosition = 0;
         }
-        if (sMark == 0) {//移动信号的划分，这个不是很确定是2g还是3g
+        if (sMark == 0) {//移动信号的划分
             if (signal <= 2 || signal == 99)
                 sPosition = 0;
             else if (signal >= 12)
