@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import com.zhanshow.mylibrary.contact.ContactEntity;
 import com.zhanshow.mylibrary.contact.ContactsUtils;
+import com.zhanshow.mylibrary.log.LogToFile;
 import com.zhanshow.mylibrary.network.NetWorkUtils;
 import com.zhanshow.mylibrary.network.NetworkStateReceiver;
 import com.zhanshow.mylibrary.phonestate.MyPhoneStateListener;
@@ -37,27 +38,27 @@ public class MainActivity extends AppCompatActivity {
         tv_power = (TextView) findViewById(R.id.textView);
         tv_network = (TextView) findViewById(R.id.textView2);
         tv_singal = (TextView) findViewById(R.id.textView3);
-
+        LogToFile.init(this);
 
         //读取通讯录列表
-        ArrayList<ContactEntity> contacts = ContactsUtils.getPhoneContacts(this);
-        for (ContactEntity contact : contacts) {
-            Log.e(TAG, "onCreate:contact.getName() =  " + contact.getName() + " contact.getNumber()  =" + contact.getNumber());
-        }
+//        ArrayList<ContactEntity> contacts = ContactsUtils.getPhoneContacts(this);
+//        for (ContactEntity contact : contacts) {
+//            Log.e(TAG, "onCreate:contact.getName() =  " + contact.getName() + " contact.getNumber()  =" + contact.getNumber());
+//        }
 
         //获取手机号码
-        String phoneNumber = ContactsUtils.getPhoneNumber(this);
-        Log.e(TAG, "onCreate: " + phoneNumber);
-        mRecorder = new Recorder(this);
+//        String phoneNumber = ContactsUtils.getPhoneNumber(this);
+//        Log.e(TAG, "onCreate: " + phoneNumber);
+//        mRecorder = new Recorder(this);
 
         findViewById(R.id.button)
                 .setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         int currentSignalStrength = PhoneStateUtils.getCurrentSignalStrength();
-                        Log.e(TAG, "currentSignalStrength: "+currentSignalStrength);
-                        int currentPower = PowerUtils.getCurrentPower();
-                        Log.e(TAG, "currentPower: "+currentPower );
+                        LogToFile.e(TAG, "currentSignalStrength: "+currentSignalStrength);
+//                        int currentPower = PowerUtils.getCurrentPower();
+//                        LogToFile.e(TAG, "currentPower: "+currentPower );
 
 //                        mRecorder.startRecording(new RecorderReceiver.RecorderReceiverListener() {
 //                            @Override
@@ -83,12 +84,12 @@ public class MainActivity extends AppCompatActivity {
 //                        });
                     }
                 });
-        findViewById(R.id.button2).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mRecorder.stopRecording();
-            }
-        });
+//        findViewById(R.id.button2).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                mRecorder.stopRecording();
+//            }
+//        });
 
 
         String networkTypeName = NetWorkUtils.getNetworkTypeName(this.getApplication());
@@ -114,26 +115,26 @@ public class MainActivity extends AppCompatActivity {
         Log.e(TAG, "onStart: ");
 
 
-        //监听电池电量半分比的变化
-        PowerUtils.registerPowerListener(this, new PowerConnectionReceiver.PowerConnectionReceiverListener() {
-            @Override
-            public void currentPower(int power) {
-                Log.e(TAG, "获取到currentPower: " + power);
-                tv_power.setText("电量" + power);
-            }
-        });
+//        //监听电池电量半分比的变化
+//        PowerUtils.registerPowerListener(this, new PowerConnectionReceiver.PowerConnectionReceiverListener() {
+//            @Override
+//            public void currentPower(int power) {
+//                Log.e(TAG, "获取到currentPower: " + power);
+//                tv_power.setText("电量" + power);
+//            }
+//        });
 
         //监听网络情况
         NetWorkUtils.registerLister(this, new NetworkStateReceiver.NetworkStateReceiverListener() {
             @Override
             public void networkAvailable(String networkName) {
-                Log.e(TAG, "获取到networkAvailable: " + networkName);
+                LogToFile.e(TAG, "获取到networkAvailable: " + networkName);
                 tv_network.setText(networkName);
             }
 
             @Override
             public void networkUnavailable() {
-                Log.e(TAG, "获取到networkUnavailable: ");
+                LogToFile.e(TAG, "获取到networkUnavailable: ");
                 tv_network.setText("networkUnavailable: ");
 
             }
@@ -143,11 +144,11 @@ public class MainActivity extends AppCompatActivity {
         PhoneStateUtils.registerPhoneStateListener(this, new MyPhoneStateListener.MyPhoneStateListenerListener() {
             @Override
             public void onSignalStrengthsChanged(int position) {
-                Log.e(TAG, "获取到onSignalStrengthsChanged: " + position);
+                LogToFile.e(TAG, "获取到onSignalStrengthsChanged: " + position);
             }
         });
 
-        Log.e(TAG, "onStart: done");
+        LogToFile.e(TAG, "onStart: done");
 
 
     }
@@ -156,9 +157,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         Log.e(TAG, "onStop: ");
-        NetWorkUtils.unRegisterNetWork(this);
-        PhoneStateUtils.unRegisterPhoneStateListener(this);
-        PowerUtils.unRegisterPowerListener(this);
+//        NetWorkUtils.unRegisterNetWork(this);
+//        PhoneStateUtils.unRegisterPhoneStateListener(this);
+//        PowerUtils.unRegisterPowerListener(this);
 
     }
 
