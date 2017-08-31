@@ -8,6 +8,8 @@ import android.telephony.SignalStrength;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 
+import com.zhanshow.mylibrary.log.LogToFile;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,23 +38,21 @@ public class MyPhoneStateListener extends PhoneStateListener {
     @Override
     public void onSignalStrengthsChanged(SignalStrength signalStrength) {
         super.onSignalStrengthsChanged(signalStrength);
-        /*@author: FindHao
-        * 添加对移动4G的信号解析支持
-        * */
+
         String signalInfo = signalStrength.toString();
         String[] params = signalInfo.split(" ");
+
         if(sMark <0)
         {
             getmark();
         }
         if (sMark == 0) {
             if(tel.getNetworkType() == TelephonyManager.NETWORK_TYPE_LTE){
-                Log.e("SignalState","4G");
-                /*@author: FindHao
-                * 这里不同手机，dbm信号有不同的index*/
+                //4G网络 最佳范围   >-90dBm 越大越好
+                LogToFile.e("PhoneState","4G");
                 signal = Integer.parseInt(params[11]);
             }else{
-                Log.e("SignalState", "2G");
+                LogToFile.e("PhoneState", "2G");
                 signal = signalStrength.getGsmSignalStrength();
             }
             getLevel();
@@ -65,7 +65,7 @@ public class MyPhoneStateListener extends PhoneStateListener {
         }else {
             sPosition = 0;
         }
-
+        LogToFile.e("PhoneState", String.format("signalStrength.getGsmSignalStrength(); %d \t signalStrength.getCdmaDbm();%d\tsignalStrength.getEvdoDbm();%d",signalStrength.getGsmSignalStrength(),signalStrength.getCdmaDbm(), signalStrength.getEvdoDbm()));
         notifyStateToAll();
     }
 
@@ -104,6 +104,7 @@ public class MyPhoneStateListener extends PhoneStateListener {
     private void getmark()//得到当前电话卡的归属运营商
     {
         String strNetworkOperator = tel.getNetworkOperator();
+        LogToFile.e("MainActivity", strNetworkOperator);
         if (strNetworkOperator != null) {
             for (int i = 0; i < 3; i++) {
                 if (strNetworkOperator.equals(STRNetworkOperator[i])) {
@@ -121,6 +122,7 @@ public class MyPhoneStateListener extends PhoneStateListener {
 
 
     private void getLevel() {
+        LogToFile.e("MainActivity",  "signal " + signal);
         // TODO Auto-generated method stub
         if (sMark == 2) {//电信3g信号强度的分类，可以按照ui自行划分等级
             if (signal >= -65)
@@ -150,7 +152,7 @@ public class MyPhoneStateListener extends PhoneStateListener {
             else
                 sPosition = 0;
         }
-        if (sMark == 0) {//移动信号的划分
+        if (sMark == 0) {//移动信号的划分，这个不是很确定是2g还是3g
             if (signal <= 2 || signal == 99)
                 sPosition = 0;
             else if (signal >= 12)
