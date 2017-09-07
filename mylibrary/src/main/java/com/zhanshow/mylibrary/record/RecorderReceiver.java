@@ -37,7 +37,7 @@ public class RecorderReceiver extends BroadcastReceiver {
             if (listener == null){
                 return;
             }
-
+            Log.e(TAG, "onReceive: "+error );
             if ("start".equals(error)){
                 listener.recordStartFailed();
             }else if ("else".equals(error)){

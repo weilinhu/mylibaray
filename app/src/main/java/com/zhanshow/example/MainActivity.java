@@ -59,28 +59,28 @@ public class MainActivity extends AppCompatActivity {
                         int currentPower = PowerUtils.getCurrentPower();
                         Log.e(TAG, "currentPower: "+currentPower );
 
-//                        mRecorder.startRecording(new RecorderReceiver.RecorderReceiverListener() {
-//                            @Override
-//                            public void recordStartSuccess() {
-//                                Toast.makeText(getApplicationContext(), "recordStartSuccess",
-//                                        Toast.LENGTH_SHORT).show();
-//                                Log.e(TAG, "recordStartSuccess: ");
-//                            }
-//
-//                            @Override
-//                            public void recordStartFailed() {
-//                                Log.e(TAG, "recordStartFailed: ");
-//                                Toast.makeText(getApplicationContext(), "recordStartFailed",
-//                                        Toast.LENGTH_SHORT).show();
-//                            }
-//
-//                            @Override
-//                            public void recordFiled() {
-//                                Toast.makeText(getApplicationContext(), "recordFiled",
-//                                        Toast.LENGTH_SHORT).show();
-//                                Log.e(TAG, "recordFiled: ");
-//                            }
-//                        });
+                        mRecorder.startRecording(new RecorderReceiver.RecorderReceiverListener() {
+                            @Override
+                            public void recordStartSuccess() {
+                                Toast.makeText(getApplicationContext(), "recordStartSuccess",
+                                        Toast.LENGTH_SHORT).show();
+                                Log.e(TAG, "recordStartSuccess: ");
+                            }
+
+                            @Override
+                            public void recordStartFailed() {
+                                Log.e(TAG, "recordStartFailed: ");
+                                Toast.makeText(getApplicationContext(), "recordStartFailed",
+                                        Toast.LENGTH_SHORT).show();
+                            }
+
+                            @Override
+                            public void recordFiled() {
+                                Toast.makeText(getApplicationContext(), "recordFiled",
+                                        Toast.LENGTH_SHORT).show();
+                                Log.e(TAG, "recordFiled: ");
+                            }
+                        });
                     }
                 });
         findViewById(R.id.button2).setOnClickListener(new View.OnClickListener() {

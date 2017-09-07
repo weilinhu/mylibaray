@@ -36,8 +36,7 @@ public class MyPhoneStateListener extends PhoneStateListener {
     @Override
     public void onSignalStrengthsChanged(SignalStrength signalStrength) {
         super.onSignalStrengthsChanged(signalStrength);
-        if(sMark <0)
-        {
+        if (sMark < 0) {
             getmark();
         }
         if (sMark == 0) {
@@ -49,13 +48,27 @@ public class MyPhoneStateListener extends PhoneStateListener {
         } else if (sMark == 2) {
             signal = signalStrength.getEvdoDbm();
             getLevel();
-        }else {
+        } else {
             sPosition = 0;
         }
 
         notifyStateToAll();
-    }
 
+//        String strength = "-1";
+//        if (signalStrength != null) {
+//            if (signalStrength.isGsm()) {
+//                strength = "" + signalStrength.getGsmSignalStrength();
+//            }
+//            if (signalStrength.getCdmaDbm() > 0) {
+//                strength = signalStrength.getCdmaDbm() + "dBm ";
+//                strength += signalStrength.getCdmaEcio() + "Ec/lo";
+//            } else if (signalStrength.getEvdoDbm() > 0) {
+//                strength = signalStrength.getEvdoDbm() + "dBm ";
+//                strength += signalStrength.getEvdoEcio() + "Ec/lo ";
+//                strength += signalStrength.getEvdoSnr() + "snr";
+//            }
+//        }
+    }
 
     public void addListener(MyPhoneStateListener.MyPhoneStateListenerListener l) {
         synchronized(lock) {

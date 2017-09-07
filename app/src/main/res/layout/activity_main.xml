@@ -12,7 +12,7 @@
 
 
     <Button
-        android:text="Button"
+        android:text="开始录音"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -23,7 +23,7 @@
         android:id="@+id/button" />
 
     <Button
-        android:text="Button"
+        android:text="停止录音"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
