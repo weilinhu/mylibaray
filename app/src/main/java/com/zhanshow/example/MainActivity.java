@@ -134,7 +134,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void networkUnavailable() {
                 Log.e("NetWorkUtils", "networkUnavailable ");
-                tv_network.setText("networkUnavailable: ");
+                tv_network.setText("Unavailable");
 
             }
         });
