@@ -29,21 +29,30 @@ public class NetworkStateReceiver extends BroadcastReceiver {
 
     public void onReceive(Context context, Intent intent) {
 
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP && TextUtils.equals(intent.getAction(), ConnectivityManager.CONNECTIVITY_ACTION) ||
-                Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && TextUtils.equals(intent.getAction(), CONNECTIVITY_ACTION_LOLLIPOP)) {
 
-            if (intent.getExtras() != null) {
-                final ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-                final NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
-                if (networkInfo != null && networkInfo.isConnectedOrConnecting()) {
-                    connected = true;
-                }
-            }
+        final ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        final NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+        if (networkInfo != null && networkInfo.isConnectedOrConnecting()) {
+            connected = true;
+        }else {
+            connected =false;
 
-            if (intent.getExtras().getBoolean(ConnectivityManager.EXTRA_NO_CONNECTIVITY, Boolean.FALSE)) {
-                connected = false;
-            }
         }
+//        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP && TextUtils.equals(intent.getAction(), ConnectivityManager.CONNECTIVITY_ACTION) ||
+//                Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && TextUtils.equals(intent.getAction(), CONNECTIVITY_ACTION_LOLLIPOP)) {
+//
+//            if (intent.getExtras() != null) {
+//                final ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+//                final NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+//                if (networkInfo != null && networkInfo.isConnectedOrConnecting()) {
+//                    connected = true;
+//                }
+//            }
+//
+//            if (intent.getExtras().getBoolean(ConnectivityManager.EXTRA_NO_CONNECTIVITY, Boolean.FALSE)) {
+//                connected = false;
+//            }
+//        }
 
         notifyStateToAll();
     }

@@ -163,29 +163,29 @@ public class NetWorkUtils {
         intentFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
         intentFilter.addAction(NetworkStateReceiver.CONNECTIVITY_ACTION_LOLLIPOP);
         activity.registerReceiver(mNetworkStateReceiver, intentFilter);
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-            return;
-        }
-        ConnectivityManager connectivityManager = (ConnectivityManager) activity.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkRequest.Builder builder = new NetworkRequest.Builder();
-
-        connectivityManager.registerNetworkCallback(builder.build(), new ConnectivityManager.NetworkCallback() {
-            @Override
-            public void onAvailable(Network network) {
-                Intent intent = new Intent(NetworkStateReceiver.CONNECTIVITY_ACTION_LOLLIPOP);
-                intent.putExtra(ConnectivityManager.EXTRA_NO_CONNECTIVITY, false);
-
-                activity.sendBroadcast(intent);
-            }
-
-            @Override
-            public void onLost(Network network) {
-                Intent intent = new Intent(NetworkStateReceiver.CONNECTIVITY_ACTION_LOLLIPOP);
-                intent.putExtra(ConnectivityManager.EXTRA_NO_CONNECTIVITY, true);
-
-                activity.sendBroadcast(intent);
-            }
-        });
+//        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+//            return;
+//        }
+//        ConnectivityManager connectivityManager = (ConnectivityManager) activity.getSystemService(Context.CONNECTIVITY_SERVICE);
+//        NetworkRequest.Builder builder = new NetworkRequest.Builder();
+//
+//        connectivityManager.registerNetworkCallback(builder.build(), new ConnectivityManager.NetworkCallback() {
+//            @Override
+//            public void onAvailable(Network network) {
+//                Intent intent = new Intent(NetworkStateReceiver.CONNECTIVITY_ACTION_LOLLIPOP);
+//                intent.putExtra(ConnectivityManager.EXTRA_NO_CONNECTIVITY, false);
+//
+//                activity.sendBroadcast(intent);
+//            }
+//
+//            @Override
+//            public void onLost(Network network) {
+//                Intent intent = new Intent(NetworkStateReceiver.CONNECTIVITY_ACTION_LOLLIPOP);
+//                intent.putExtra(ConnectivityManager.EXTRA_NO_CONNECTIVITY, true);
+//
+//                activity.sendBroadcast(intent);
+//            }
+//        });
     }
 
 

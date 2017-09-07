@@ -20,6 +20,7 @@ import com.zhanshow.mylibrary.record.Recorder;
 import com.zhanshow.mylibrary.record.RecorderReceiver;
 import com.zhanshow.weilinhu_mac.cocosapi.R;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
@@ -127,13 +128,12 @@ public class MainActivity extends AppCompatActivity {
         NetWorkUtils.registerLister(this, new NetworkStateReceiver.NetworkStateReceiverListener() {
             @Override
             public void networkAvailable(String networkName) {
-                Log.e(TAG, "获取到networkAvailable: " + networkName);
+                Log.e("NetWorkUtils", "获取到networkAvailable: " + networkName);
                 tv_network.setText(networkName);
             }
-
             @Override
             public void networkUnavailable() {
-                Log.e(TAG, "获取到networkUnavailable: ");
+                Log.e("NetWorkUtils", "networkUnavailable ");
                 tv_network.setText("networkUnavailable: ");
 
             }
