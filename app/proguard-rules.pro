@@ -15,3 +15,13 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+#-keep   class com.zhanle.upgrade.Error {*;}
+#-keep   class com.zhanle.upgrade.UpgradeListener {*;}
+#
+#-keep class com.zhanle.upgrade.* {
+#    public <methods>;
+#}
+
+-keep class com.zhanle.upgrade.* {
+ *;
+}

@@ -97,9 +97,17 @@ public class MainActivity extends AppCompatActivity {
 
         String networkTypeName = NetWorkUtils.getNetworkTypeName(this.getApplication());
 
-        UpgradeManager.getInstance().download(this,"http://openbox.mobilem.360.cn/index/d/sid/3886772", "棋牌", new UpgradeListener() {
+
+        UpgradeManager.getInstance().download(this,"http://openbox.mobilem.360.cn/index/d/sid/3886772", "通知名称", new UpgradeListener() {
             @Override
             public void onUpgradeListener(int progress, Error error) {
+
+                //进度小于o，说明下载错误
+                if (progress < 0){
+                    Log.e(TAG, "onUpgradeListener: "+error.getErrorMsg() );
+                    return;
+                }
+                //当前进度，到达 100  会自动跳往安装界面
                 Log.e(TAG, "onUpgradeListener: "+progress );
             }
         });

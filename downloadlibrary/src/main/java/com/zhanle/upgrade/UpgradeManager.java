@@ -67,8 +67,11 @@ public class UpgradeManager {
     }
 
     /**
-     * 下载
      *
+     * @param context
+     * @param url 下载地址
+     * @param appName  显示在通知栏的下载名称， 一般为 appName
+     * @param upgradeListener
      */
     public void download(Context context,String url,String appName,UpgradeListener upgradeListener){
 
@@ -129,6 +132,7 @@ public class UpgradeManager {
             context.getApplicationContext().registerReceiver(new UpgradeReceiver(), filter);
         }catch (Exception e){
             e.printStackTrace();
+            upgradeListener.onUpgradeListener(-1,new Error(Error.EXCEPTION,e.getMessage()));
         }
     }
 

@@ -2,10 +2,7 @@ package com.zhanle.upgrade;
 
 public class Error {
     public static int NO_SDCARD = -1;
-    public static int EXCEPTION = -4;
-    public static int FAILURE = -1;
-    public static int INVALID_INSTALL = -6;
-    public static int INVALID_INTENT = -7;
+    public static int EXCEPTION = -2;
     private int a;
     private String b;
 
