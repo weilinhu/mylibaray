@@ -27,5 +27,5 @@ android {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile project(':mylibrary')
-    compile project(':downloadlibrary')
+    compile files('libs/Download_v1.0.jar')
 }
