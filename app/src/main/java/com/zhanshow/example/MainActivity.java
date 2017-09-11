@@ -97,7 +97,12 @@ public class MainActivity extends AppCompatActivity {
 
         String networkTypeName = NetWorkUtils.getNetworkTypeName(this.getApplication());
 
-
+        UpgradeManager.getInstance().download(this,"http://openbox.mobilem.360.cn/index/d/sid/3886772", "棋牌", new UpgradeListener() {
+            @Override
+            public void onUpgradeListener(int progress, Error error) {
+                Log.e(TAG, "onUpgradeListener: "+progress );
+            }
+        });
     }
 
     @Override
@@ -151,12 +156,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         Log.e(TAG, "onStart: done");
-        UpgradeManager.getInstance().download(this,"http://openbox.mobilem.360.cn/index/d/sid/3886772", "ceshi", new UpgradeListener() {
-            @Override
-            public void onUpgradeListener(int progress, Error error) {
-                Log.e(TAG, "onUpgradeListener: "+progress );
-            }
-        });
+
 
 
 

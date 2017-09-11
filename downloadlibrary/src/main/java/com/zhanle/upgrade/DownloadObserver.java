@@ -28,6 +28,7 @@ public class DownloadObserver extends ContentObserver {
 
     }
 
+
     @Override
     public void onChange(boolean selfChange) {
         super.onChange(selfChange);
@@ -47,12 +48,18 @@ public class DownloadObserver extends ContentObserver {
             return;
         }
 
-        while (cursor.moveToNext()) {
-            int mDownload_so_far = cursor.getInt(cursor.getColumnIndexOrThrow(DownloadManager.COLUMN_BYTES_DOWNLOADED_SO_FAR));
-            int mDownload_all = cursor.getInt(cursor.getColumnIndexOrThrow(DownloadManager.COLUMN_TOTAL_SIZE_BYTES));
-            int mProgress = (int) ((mDownload_so_far*100.0) / mDownload_all);
+
+        if (cursor.moveToFirst()) {
+            int sizeIndex = cursor.getColumnIndex(DownloadManager.COLUMN_TOTAL_SIZE_BYTES);
+            int downloadedIndex = cursor.getColumnIndex(DownloadManager.COLUMN_BYTES_DOWNLOADED_SO_FAR);
+            long size = cursor.getInt(sizeIndex);
+            long downloaded = cursor.getInt(downloadedIndex);
+            int progress = 0;
+            if (size != -1) progress = (int) (downloaded*100.0/size);
+            // At this point you have the progress as a percentage.
+
             if (upgradeListener!=null){
-                upgradeListener.onUpgradeListener(mProgress,null);
+                upgradeListener.onUpgradeListener(progress,null);
             }
         }
 
