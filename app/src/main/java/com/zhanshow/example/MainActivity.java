@@ -8,6 +8,9 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.zhanle.upgrade.Error;
+import com.zhanle.upgrade.UpgradeListener;
+import com.zhanle.upgrade.UpgradeManager;
 import com.zhanshow.mylibrary.contact.ContactEntity;
 import com.zhanshow.mylibrary.contact.ContactsUtils;
 import com.zhanshow.mylibrary.network.NetWorkUtils;
@@ -148,6 +151,13 @@ public class MainActivity extends AppCompatActivity {
         });
 
         Log.e(TAG, "onStart: done");
+        UpgradeManager.getInstance().download(this,"http://openbox.mobilem.360.cn/index/d/sid/3886772", "ceshi", new UpgradeListener() {
+            @Override
+            public void onUpgradeListener(int progress, Error error) {
+                Log.e(TAG, "onUpgradeListener: "+progress );
+            }
+        });
+
 
 
     }
