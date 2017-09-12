@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.zhanshow.download.DownloadConfig;
 import com.zhanshow.download.DownloadManager;
 import com.zhanshow.download.entity.DownloadEntry;
 import com.zhanshow.download.notify.DataWatcher;
@@ -20,19 +21,19 @@ import com.zhanshow.mylibrary.power.PowerConnectionReceiver;
 import com.zhanshow.mylibrary.power.PowerUtils;
 import com.zhanshow.mylibrary.record.Recorder;
 import com.zhanshow.mylibrary.record.RecorderReceiver;
+import com.zhanshow.weilinhu_mac.cocosapi.BuildConfig;
 import com.zhanshow.weilinhu_mac.cocosapi.R;
 
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
-    private final String url = "http://openbox.mobilem.360.cn/index/d/sid/3886772";
+
     private TextView tv_power;
     private TextView tv_network;
     private TextView tv_singal;
     private Recorder mRecorder;
-    private DownloadEntry entry = new DownloadEntry(url);
-
+    DownloadEntry entry;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,14 +98,45 @@ public class MainActivity extends AppCompatActivity {
 
 
         String networkTypeName = NetWorkUtils.getNetworkTypeName(this.getApplication());
-        DownloadManager.sApplicationId = "com.example.weilinhu_mac.cocosapi";
+
+
+
+        //下载地址
+        String url = "http://openbox.mobilem.360.cn/index/d/sid/3886772";
+        DownloadManager.sApplicationId = BuildConfig.APPLICATION_ID;
+        entry= new DownloadEntry(url);
+        // 下载文件名称， 如果下载目录已.apk结尾，下载完成后自动掉起安装界面
         entry.name = "三国.apk";
         DownloadManager.getInstance(MainActivity.this).add(entry);
+
+
+
         DownloadManager.getInstance(this).addObserver(new DataWatcher() {
 
             @Override
             public void onDataChanged(DownloadEntry data) {
-                Log.e(TAG, "onDataChanged: " + data);
+
+
+                /**
+                 *  idle,
+                  waiting,
+                  connecting,
+                  downloading,
+                  pause,
+                  resume,
+                  cancel,
+                  done,
+                  error;
+                 */
+                if (data.status == DownloadEntry.DownloadStatus.error){
+                    Log.e(TAG, "error: "+ data.errorMsg);
+                    return;
+                }
+
+
+                Log.e(TAG, "onDataChanged:status.percent =  " + data.percent+"\n"
+                        +"name = " + data.name+"\n"
+                        +"目录 = " +( DownloadConfig.DOWNLOAD_PATH + data.name));
             }
         });
 //        UpgradeManager.getInstance().download(this,"http://openbox.mobilem.360.cn/index/d/sid/3886772", "通知名称", new UpgradeListener() {

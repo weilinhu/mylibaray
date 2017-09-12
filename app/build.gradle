@@ -26,5 +26,5 @@ android {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile project(':mylibrary')
-    compile project(':downloads')
+    compile(name:'downloads_v1.0', ext:'aar')
 }
