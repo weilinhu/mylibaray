@@ -15,26 +15,3 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
-#-keep   class com.zhanle.upgrade.Error {*;}
-#-keep   class com.zhanle.upgrade.UpgradeListener {*;}
-#
-#-keep class com.zhanle.upgrade.* {
-#    public <methods>;
-#}
-
--keep class com.zhanshow.download.** {
- *;
-}
-
--keep class com.j256.ormlite.** {
- *;
-}
-
--dontwarn org.slf4j.**
--dontwarn org.apache.log4j.**
--dontwarn org.apache.commons.logging.**
--dontwarn org.apache.commons.codec.binary.**
--dontwarn javax.persistence.**
--dontwarn javax.lang.**
--dontwarn javax.annotation.**
--dontwarn javax.tools.**

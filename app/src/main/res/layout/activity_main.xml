@@ -61,4 +61,50 @@
         android:layout_alignEnd="@+id/textView2"
         android:layout_marginTop="28dp"
         android:id="@+id/textView3" />
+    <LinearLayout
+        android:layout_below="@id/textView3"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="match_parent">
+
+
+    <Button
+        android:text="开始下载"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="24dp"
+        android:layout_marginStart="24dp"
+        android:onClick="start"
+         />
+
+    <Button
+        android:text="暂停"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="24dp"
+        android:layout_marginStart="24dp"
+        android:onClick="stop"
+        />
+
+        <Button
+        android:text="恢复"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="24dp"
+        android:layout_marginStart="24dp"
+        android:onClick="resume"
+        />
+
+        <Button
+            android:text="取消"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="24dp"
+            android:layout_marginStart="24dp"
+            android:onClick="cancel"
+            />
+    </LinearLayout>
 </RelativeLayout>

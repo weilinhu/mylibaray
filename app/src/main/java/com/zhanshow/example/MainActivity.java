@@ -2,15 +2,14 @@ package com.zhanshow.example;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.telephony.SignalStrength;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.zhanle.upgrade.Error;
-import com.zhanle.upgrade.UpgradeListener;
-import com.zhanle.upgrade.UpgradeManager;
+import com.zhanshow.download.DownloadManager;
+import com.zhanshow.download.entity.DownloadEntry;
+import com.zhanshow.download.notify.DataWatcher;
 import com.zhanshow.mylibrary.contact.ContactEntity;
 import com.zhanshow.mylibrary.contact.ContactsUtils;
 import com.zhanshow.mylibrary.network.NetWorkUtils;
@@ -23,15 +22,17 @@ import com.zhanshow.mylibrary.record.Recorder;
 import com.zhanshow.mylibrary.record.RecorderReceiver;
 import com.zhanshow.weilinhu_mac.cocosapi.R;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
+    private final String url = "http://openbox.mobilem.360.cn/index/d/sid/3886772";
     private TextView tv_power;
     private TextView tv_network;
     private TextView tv_singal;
     private Recorder mRecorder;
+    private DownloadEntry entry = new DownloadEntry(url);
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,9 +60,9 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         int currentSignalStrength = PhoneStateUtils.getCurrentSignalStrength();
-                        Log.e(TAG, "currentSignalStrength: "+currentSignalStrength);
+                        Log.e(TAG, "currentSignalStrength: " + currentSignalStrength);
                         int currentPower = PowerUtils.getCurrentPower();
-                        Log.e(TAG, "currentPower: "+currentPower );
+                        Log.e(TAG, "currentPower: " + currentPower);
 
                         mRecorder.startRecording(new RecorderReceiver.RecorderReceiverListener() {
                             @Override
@@ -96,8 +97,16 @@ public class MainActivity extends AppCompatActivity {
 
 
         String networkTypeName = NetWorkUtils.getNetworkTypeName(this.getApplication());
+        DownloadManager.sApplicationId = "com.example.weilinhu_mac.cocosapi";
+        entry.name = "三国.apk";
+        DownloadManager.getInstance(MainActivity.this).add(entry);
+        DownloadManager.getInstance(this).addObserver(new DataWatcher() {
 
-
+            @Override
+            public void onDataChanged(DownloadEntry data) {
+                Log.e(TAG, "onDataChanged: " + data);
+            }
+        });
 //        UpgradeManager.getInstance().download(this,"http://openbox.mobilem.360.cn/index/d/sid/3886772", "通知名称", new UpgradeListener() {
 //            @Override
 //            public void onUpgradeListener(int progress, Error error) {
@@ -113,11 +122,24 @@ public class MainActivity extends AppCompatActivity {
 //        });
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Log.e(TAG, "onResume: ");
+
+    public void start(View v) {
+        DownloadManager.getInstance(MainActivity.this).add(entry);
+
     }
+
+    public void stop(View v) {
+        DownloadManager.getInstance(MainActivity.this).pause(entry);
+    }
+
+    public void resume(View v) {
+        DownloadManager.getInstance(MainActivity.this).resume(entry);
+    }
+
+    public void cancel(View v) {
+        DownloadManager.getInstance(MainActivity.this).cancel(entry);
+    }
+
 
     @Override
     protected void onRestart() {
@@ -147,6 +169,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.e("NetWorkUtils", "获取到networkAvailable: " + networkName);
                 tv_network.setText(networkName);
             }
+
             @Override
             public void networkUnavailable() {
                 Log.e("NetWorkUtils", "networkUnavailable ");
@@ -166,8 +189,6 @@ public class MainActivity extends AppCompatActivity {
         Log.e(TAG, "onStart: done");
 
 
-
-
     }
 
     @Override
@@ -184,9 +205,23 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         Log.e(TAG, "onDestroy: ");
-        if (mRecorder!=null){
+        DownloadManager.getInstance(this).removeObservers();
+        if (mRecorder != null) {
             mRecorder.release(this);
         }
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.e(TAG, "onResume: ");
+//        DownloadManager.getInstance(this).addObserver(dataWatcher);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+//        DownloadManager.getInstance(this).removeObserver(dataWatcher);
     }
 }
