@@ -21,6 +21,9 @@ import com.zhanshow.mylibrary.power.PowerConnectionReceiver;
 import com.zhanshow.mylibrary.power.PowerUtils;
 import com.zhanshow.mylibrary.record.Recorder;
 import com.zhanshow.mylibrary.record.RecorderReceiver;
+import com.zhanshow.ping.Task.InfoTask;
+import com.zhanshow.ping.Task.PingTask;
+import com.zhanshow.ping.Task.TraceTask;
 import com.zhanshow.weilinhu_mac.cocosapi.BuildConfig;
 import com.zhanshow.weilinhu_mac.cocosapi.R;
 
@@ -32,6 +35,8 @@ public class MainActivity extends AppCompatActivity {
     private TextView tv_power;
     private TextView tv_network;
     private TextView tv_singal;
+    private TextView ping;
+    private TextView ping1;
     private Recorder mRecorder;
     DownloadEntry entry;
 
@@ -43,6 +48,8 @@ public class MainActivity extends AppCompatActivity {
         tv_power = (TextView) findViewById(R.id.textView);
         tv_network = (TextView) findViewById(R.id.textView2);
         tv_singal = (TextView) findViewById(R.id.textView3);
+        ping = (TextView) findViewById(R.id.ping);
+        ping1 = (TextView) findViewById(R.id.ping1);
 
 
         //读取通讯录列表
@@ -55,6 +62,17 @@ public class MainActivity extends AppCompatActivity {
         String phoneNumber = ContactsUtils.getPhoneNumber(this);
         Log.e(TAG, "onCreate: " + phoneNumber);
         mRecorder = new Recorder(this);
+
+//
+        PingTask pingTask = new PingTask("www.baidu.com",ping);
+        pingTask.doTask();
+
+
+        TraceTask pingTask1 = new TraceTask(this,"www.baidu.com",ping1);
+        pingTask1.doTask();
+
+//        InfoTask pingTask = new InfoTask("www.baidu.com",ping);
+//        pingTask.doTask();
 
         findViewById(R.id.button)
                 .setOnClickListener(new View.OnClickListener() {
@@ -107,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
         entry= new DownloadEntry(url);
         // 下载文件名称， 如果下载目录已.apk结尾，下载完成后自动掉起安装界面
         entry.name = "三国.apk";
-        DownloadManager.getInstance(MainActivity.this).add(entry);
+//        DownloadManager.getInstance(MainActivity.this).add(entry);
 
 
 
