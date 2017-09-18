@@ -328,7 +328,13 @@ public class LDNetDiagnoService extends
         + android.os.Build.BRAND + ":" + android.os.Build.MODEL);
     recordStepInfo("系统版本:\t" + android.os.Build.VERSION.RELEASE);
     if (_telManager != null && TextUtils.isEmpty(_deviceID)) {
-      _deviceID = _telManager.getDeviceId();
+      try {
+        _deviceID = _telManager.getDeviceId();
+      } catch (Exception e){
+        e.printStackTrace();
+        _deviceID = "";
+      }
+
     }
     recordStepInfo("机器ID:\t" + _deviceID);
 

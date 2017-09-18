@@ -27,5 +27,5 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile project(':mylibrary')
     compile(name: 'downloads_v1.0', ext: 'aar')
-    compile files('libs/ping-release.jar')
+    compile files('libs/ping_trace.jar')
 }
